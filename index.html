@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Tianhui (Lily) Yang - Project 3</title>
+</head>
+<body>
+    <div class='header'>
+        <h1>Face Morphing</h1>
+        <h3 style="font-weight: 200;">Tianhui (Lily) Yang CS194 Spring 2020 </h3>
+    </div>
+
+    <div class='introduction'>
+        <h2> Introduction </h2>
+        <p style="font-style: italic; font-size: 15px;">short summary of what this was all about :)</p>
+        <p> Warping faces is so fun they make mirrors that do just that. So how bout let's try to recreate it
+            with some math and some fun photos?
+            <br>
+            In this project, I morphed between image sequences by splitting up images into a bunch of triangles
+            and changing them via affine transformations.
+        </p>
+    </div>
+    <div class='methods'>
+        <h2> Part 1: Defining Correspondences</h2>
+        <p> In order for us to split the image into transformable triangles, we need to find points to map 
+            features between images. Using ginput, I saved points of correspondence and performed Delaunay 
+            triangulation to create the following nets. 
+        </p>
+        <div class='col'>
+            <img src="triangulation-collage.png" alt="triangles" width=50%>
+        </div>
+        <h2> Part 2: Finding the "Mid-way Face"</h2>
+        <div class='col'>
+            <img src="mid-way.png" alt="mid-way" width=50%>
+        </div>
+        <p> To correctly transform each triangle we perform 2 main operations. 
+            <br> 
+            1. Find the affine transformation between the triangle in the start image and the triangle in the result image
+            as seen in the matrix represented with values a, b, ..., above 
+            <br>
+            2. Using known points in the result image, retrieve corresponding points in the start image through inverse mapping with the computed affine matrix. 
+            Then, assign pixel values from the start image at the corresponding points to the known points in the result image.
+        </p>
+        <h2>Part 3: Morph Sequence</h2>
+        <div class='col'>
+            <img src="finaljlmorph-min.gif" alt="mid-way morphed" width=50%>
+        </div>
+        <p> After performing the warp for the mid-way point, I then used weighted averages to cross dissolve
+            between transformations to other weighted warps.
+        </p>
+    
+        <h2> Part 4: The "Mean Face" of a Population</h2>
+
+        <p> After trying out warps with my own photos, I looked in the collect averages of database images. Here is the dataset
+            from the <a href="https://fei.edu.br/~cet/facedatabase.html"> FEI face database </a>  in Sao Paulo, Brazil. I decided to
+            look into the female sub-population of neutral images. We see that some transformations are very wonky 
+            for most people when we morph them to the average face shape. The average is the sharpest around the eyes and noisiest in the hair section. 
+        </p>
+        <div class='col'>
+            <img src="meanface.png" alt="meanface" width=50%>
+        </div>
+
+        <h3> 4.1: Caricatures </h3>
+        <div class='col'>
+            <img src="caricature-collage.png" alt="caricature-collage" width=50%>
+        </div>
+        <p> We can think of the differences between the average and other faces as the difference between the distances of their correspondence points.
+            This then gives us the ability to extrapolate beyond the data by adding or subtracting scalar multiples of the differences. In the gif below,
+            I show just that. As you can see, when the coefficient multiplying the differnce is too high, the face ceases to be natural. 
+        </p>
+        <div class='col'>
+            <img src="caricaturemorph.gif" alt="caricaturemorph" width=30%>
+        </div>
+        <br><br>
+        <h2>Bells and Whistles</h2>
+        <p> I love watching kdramas and particularly liked watching Scarlet Heart: Ryeo. They also had really
+            cool posters, so here's a video sequence coordinated to the song: 'Wind (바람)' (Scarlet Heart: Ryeo OST, Part 11) 
+            by Jung Seung Hwan.
+        </p>
+        <div class='col'>
+            <iframe src="https://player.vimeo.com/video/394723323" width="640" height="427" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+<p><a href="https://vimeo.com/394723323">Themed Morph</a> from <a href="https://vimeo.com/user109156891">Lily Yang</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
+        </div>
+
+        <h3>Participating in the class morph video :). Thanks to Zixian Zang for putting it together!</h3>
+        <div class='col'>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/O2p-U615Rzs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <p>
+           The most important thing I learned from this project is that complex transformations can 
+           always be broken down into smaller parts :). I thought this was really fun and especially liked
+           looking at faces warping in and out between frames. 
+        </p>
+    </div>
+
+</body>
+</html>
